@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginTop="3dp"
+    android:gravity="center"
+    android:orientation="vertical">
+    <com.hywy.luanhzt.view.customer.MoreItemView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        app:item_height="48dp"
+        app:item_background="@color/activity_bg_default"
+        app:item1_text=""
+        app:item1_textcolor="@color/font_2"
+        app:item1_textsize="16sp"
+        app:leftIcon_visibility="gone"
+        app:line1_visibility="invisible"
+        app:line2_visibility="invisible"
+        app:rightIcon="@drawable/ic_right_gray"
+        app:rightIcon_visibility="visible" />
+
+</LinearLayout>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.hywy.luanhzt.view.MyDrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/activity_bg_default">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.esri.arcgisruntime.mapping.view.MapView
+            android:id="@+id/map"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <com.amap.api.maps.MapView
+            android:id="@+id/mapView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clickable="true"
+            android:enabled="true"
+            android:visibility="gone" />
+
+        <RadioGroup
+            android:id="@+id/radio_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|bottom"
+            android:layout_margin="10dp"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            android:visibility="visible">
+
+            <RadioButton
+                android:id="@+id/btn1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_map_choose_bg"
+                android:button="@null"
+                android:padding="@dimen/dimen_10dp"
+                android:text="底图影像"
+                android:textColor="@color/font_1"
+                android:textSize="16sp" />
+
+            <RadioButton
+                android:id="@+id/btn2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_map_choose_bg"
+                android:button="@null"
+                android:checked="true"
+                android:padding="@dimen/dimen_10dp"
+                android:text="卫星遥感"
+                android:textColor="@color/font_1"
+                android:textSize="16sp" />
+        </RadioGroup>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|center_vertical"
+            android:layout_marginRight="@dimen/dimen_5dp"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/btn_open"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_map_layer" />
+
+            <ImageView
+                android:id="@+id/btn_reset"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|center_vertical"
+                android:src="@drawable/icon_location_reset" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/iv_compass"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|right"
+            android:layout_margin="20dp"
+            android:src="@drawable/icon_compass" />
+    </FrameLayout>
+
+    <include layout="@layout/layout_layer_info" />
+
+</com.hywy.luanhzt.view.MyDrawerLayout>

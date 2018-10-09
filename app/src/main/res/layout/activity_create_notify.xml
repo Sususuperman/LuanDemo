@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/activity_bg_default"
+    android:padding="@dimen/dimen_10dp"
+    tools:context="com.hywy.luanhzt.activity.YuJingActivity">
+
+    <com.hywy.luanhzt.view.MyScrollview
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/notify_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_btn_default"
+                android:gravity="center"
+                android:hint="请输入信息标题"
+                android:padding="@dimen/dimen_10dp"
+                android:textColor="@color/font_1"
+                android:textColorHint="@color/font_gray"
+                android:textSize="16sp" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_5dp"
+                android:background="@drawable/bg_btn_default"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/dimen_5dp"
+                android:paddingRight="@dimen/dimen_5dp">
+
+
+                <LinearLayout
+                    android:id="@+id/layout_event"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/dimen_10dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dimen_10dp"
+                        android:gravity="center_vertical"
+                        android:text="信息类型："
+                        android:textColor="@color/font_gray"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/tv_type"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:textColor="@color/font_1"
+                        android:textColorHint="@color/gray_light"
+                        android:textSize="15sp" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginRight="@dimen/dimen_10dp"
+                        android:src="@drawable/ic_down_arrow" />
+                </LinearLayout>
+
+                <include layout="@layout/line_defalt_h" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/dimen_10dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dimen_10dp"
+                        android:gravity="center_vertical"
+                        android:text="发布人："
+                        android:textColor="@color/font_gray"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/tv_user"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:textColor="@color/font_1"
+                        android:textColorHint="@color/gray_light"
+                        android:textSize="15sp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="85dp"
+                android:layout_marginTop="@dimen/dimen_5dp"
+                android:background="@drawable/bg_btn_default"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="@dimen/dimen_5dp"
+                    android:paddingLeft="25dp"
+                    android:paddingTop="@dimen/dimen_5dp"
+                    android:text="信息内容："
+                    android:textColor="@color/font_gray"
+                    android:textSize="14sp" />
+
+                <EditText
+                    android:id="@+id/notify_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:gravity="top"
+                    android:minHeight="180dp"
+                    android:paddingBottom="@dimen/dimen_5dp"
+                    android:paddingLeft="25dp"
+                    android:paddingTop="@dimen/dimen_5dp"
+                    android:textColor="@color/font_1"
+                    android:textSize="15sp" />
+            </LinearLayout>
+        </LinearLayout>
+    </com.hywy.luanhzt.view.MyScrollview>
+
+    <Button
+        android:id="@+id/btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:background="@drawable/choose_btn"
+        android:gravity="center"
+        android:text="@string/text_sumbit"
+        android:textColor="@color/white"
+        android:textSize="17sp" />
+</FrameLayout>

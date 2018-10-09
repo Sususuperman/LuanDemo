@@ -1,0 +1,92 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/activity_insured_company"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/activity_bg_drak"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/dimen_5dp"
+    android:paddingRight="@dimen/dimen_5dp"
+    android:paddingTop="@dimen/dimen_5dp">
+
+    <RelativeLayout
+        android:id="@+id/layout_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_btn_default"
+        android:orientation="horizontal"
+        android:padding="@dimen/dimen_10dp"
+        android:visibility="visible">
+
+
+        <TextView
+            android:id="@+id/tv_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:hint="选择日期"
+            android:textColor="@color/font_1"
+            android:textColorHint="@color/gray_light"
+            android:textSize="16sp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/ic_down_arrow" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/log_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_5dp"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:padding="@dimen/dimen_10dp"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="日期"
+            android:textColor="@color/bg_title_blue"
+            android:textSize="15sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="巡查人"
+            android:textColor="@color/bg_title_blue"
+            android:textSize="15sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="等级"
+            android:textColor="@color/bg_title_blue"
+            android:textSize="15sp" />
+    </LinearLayout>
+
+    <com.cs.common.view.SwipeRefreshview
+        android:id="@+id/swipeRefresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/dimen_10dp">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </com.cs.common.view.SwipeRefreshview>
+</LinearLayout>
+

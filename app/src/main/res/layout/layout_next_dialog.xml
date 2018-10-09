@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/user_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/dimen_10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="@dimen/dimen_10dp"
+            android:gravity="center_vertical"
+            android:text="接收人员："
+            android:textColor="@color/font_gray"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/tv_user"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="@color/font_1"
+            android:textSize="15sp"
+            tools:text="@string/see_locate" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:gravity="center"
+            android:src="@drawable/ic_down_arrow"
+            tools:text="@string/see_locate" />
+    </LinearLayout>
+
+    <include layout="@layout/line_defalt_h" />
+
+    <LinearLayout
+        android:id="@+id/limit_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/dimen_10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="@dimen/dimen_10dp"
+            android:gravity="center_vertical"
+            android:text="完成时限："
+            android:textColor="@color/font_gray"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/tv_limit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="@color/font_1"
+            android:textSize="15sp"
+            tools:text="@string/see_locate" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:gravity="center"
+            android:src="@drawable/ic_down_arrow"
+            tools:text="@string/see_locate" />
+    </LinearLayout>
+</LinearLayout>
