@@ -15,7 +15,6 @@ import com.hywy.luanhzt.entity.River;
 
 
 /**
- * 视频点gridview adapter
  *
  * @author Superman
  */
@@ -44,30 +43,34 @@ public class RiverGridAdapter extends BaseListAdapter<River> {
                 tv_name.setText(river.getREACH_NAME());
             }
 
-            if (StringUtils.hasLength(river.getWATER_TYPE())) {
-                switch (river.getWATER_TYPE()) {
-                    case "1":
-                        iv_status.setImageResource(R.drawable.ic_i);
-                        break;
-                    case "2":
-                        iv_status.setImageResource(R.drawable.ic_ii);
-                        break;
-                    case "3":
-                        iv_status.setImageResource(R.drawable.ic_iii);
-                        break;
-                    case "4":
-                        iv_status.setImageResource(R.drawable.ic_iv);
-                        break;
-                    case "5":
-                        iv_status.setImageResource(R.drawable.ic_v);
-                        break;
-                    case "6":
-                        iv_status.setImageResource(R.drawable.ic_v_);
-                        break;
-                }
-            }
+            initImg(iv_status, river);
         }
         return convertView;
+    }
+
+    public static void initImg(ImageView iv_status, River river) {
+        if (StringUtils.hasLength(river.getREACH_LEVEL())) {
+            switch (river.getREACH_LEVEL()) {
+                case "1":
+                    iv_status.setImageResource(R.drawable.ic_i);
+                    break;
+                case "2":
+                    iv_status.setImageResource(R.drawable.ic_ii);
+                    break;
+                case "3":
+                    iv_status.setImageResource(R.drawable.ic_iii);
+                    break;
+                case "4":
+                    iv_status.setImageResource(R.drawable.ic_iv);
+                    break;
+                case "5":
+                    iv_status.setImageResource(R.drawable.ic_v);
+                    break;
+                case "6":
+                    iv_status.setImageResource(R.drawable.ic_v_);
+                    break;
+            }
+        }
     }
 
 }

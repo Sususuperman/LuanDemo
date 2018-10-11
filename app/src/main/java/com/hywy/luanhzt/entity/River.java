@@ -24,8 +24,26 @@ public class River implements Parcelable {
     private String REACH_CODE;
     private String REACH_NAME;
     private String WATER_TYPE;
+    private String REACH_LEVEL;//河道水质级别，现在用这个
+    private int TYPE;//0本级河段，1下级河段
     private String ADCD;
     private List<River> child;
+
+    public String getREACH_LEVEL() {
+        return REACH_LEVEL;
+    }
+
+    public void setREACH_LEVEL(String REACH_LEVEL) {
+        this.REACH_LEVEL = REACH_LEVEL;
+    }
+
+    public int getTYPE() {
+        return TYPE;
+    }
+
+    public void setTYPE(int TYPE) {
+        this.TYPE = TYPE;
+    }
 
     public String getRV_NAME() {
         return RV_NAME;
@@ -98,6 +116,8 @@ public class River implements Parcelable {
         dest.writeString(this.REACH_CODE);
         dest.writeString(this.REACH_NAME);
         dest.writeString(this.WATER_TYPE);
+        dest.writeString(this.REACH_LEVEL);
+        dest.writeInt(this.TYPE);
         dest.writeString(this.ADCD);
         dest.writeTypedList(this.child);
     }
@@ -108,6 +128,8 @@ public class River implements Parcelable {
         this.REACH_CODE = in.readString();
         this.REACH_NAME = in.readString();
         this.WATER_TYPE = in.readString();
+        this.REACH_LEVEL = in.readString();
+        this.TYPE = in.readInt();
         this.ADCD = in.readString();
         this.child = in.createTypedArrayList(River.CREATOR);
     }

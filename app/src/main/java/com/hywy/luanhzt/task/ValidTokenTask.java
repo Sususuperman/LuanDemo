@@ -3,6 +3,7 @@ package com.hywy.luanhzt.task;
 import android.content.Context;
 
 import com.cs.android.task.Task;
+import com.cs.common.utils.StringUtils;
 import com.hywy.luanhzt.Const;
 import com.hywy.luanhzt.R;
 import com.hywy.luanhzt.app.App;
@@ -93,7 +94,8 @@ public abstract class ValidTokenTask implements Task {
 ////        p.put("versioncode", ApplicationInfo.getVersion(context.getPackageName(),context));
 //        p.put("from", "android");
 //        p.put("api_path",1);//添加api路径，返回带地址的完整路径。
-        p.put("USER_ID", App.getInstence().getAccount().getUserId());
+        if (App.getInstence().getAccount() != null && StringUtils.hasLength(App.getInstence().getAccount().getUserId()))
+            p.put("USER_ID", App.getInstence().getAccount().getUserId());
         if (params != null) {
             p.putAll(params);
         }

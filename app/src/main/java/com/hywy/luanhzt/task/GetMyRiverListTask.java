@@ -32,7 +32,7 @@ public class GetMyRiverListTask extends BaseRequestTask {
 
     @Override
     public String url() {
-        return HttpUrl.getUrl(HttpUrl.RMS_APP_RIVERWAY_RIVERWAYLISTTREEAPP);
+        return HttpUrl.getUrl(HttpUrl.RMS_APP_RIVERWAY_APPRIVERLIST);
     }
 
     @Override

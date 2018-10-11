@@ -23,11 +23,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import com.cs.android.task.Task;
 import com.cs.common.base.BaseActivity;
 import com.cs.common.handler.BaseHandler_;
 import com.cs.common.handler.SpringViewHandler;
 import com.cs.common.listener.OnPostListenter;
 import com.cs.common.utils.DialogTools;
+import com.cs.common.utils.IToast;
 import com.cs.common.utils.StringUtils;
 import com.cs.common.view.SoftKeyBoardSatusView;
 import com.cs.common.view.percent.PercentLinearLayout;
@@ -38,11 +40,16 @@ import com.hywy.luanhzt.app.App;
 import com.hywy.luanhzt.entity.River;
 import com.hywy.luanhzt.key.Key;
 import com.hywy.luanhzt.task.GetAppMenuTask;
+import com.hywy.luanhzt.task.GetForgetPwdTask;
 import com.hywy.luanhzt.task.GetRiverListTask;
 import com.hywy.luanhzt.task.LoginTask;
+import com.hywy.luanhzt.utils.SystemUtils;
 import com.mylhyl.acp.Acp;
 import com.mylhyl.acp.AcpListener;
 import com.mylhyl.acp.AcpOptions;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -90,6 +97,9 @@ public class LoginActivity extends BaseActivity implements OnClickListener,
     @Bind(R.id.togglePwd)
     ToggleButton toggleButton;
 
+    @Bind(R.id.forget_pwd)
+    TextView tvForget;
+
 
     private String url;
     private Animation my_Translate;
@@ -135,7 +145,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener,
     private void RequestPermmisons() {
         Acp.getInstance(this).request(new AcpOptions.Builder()
                         .setPermissions(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.CAMERA
-                        ,Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                                , Manifest.permission.WRITE_EXTERNAL_STORAGE)
                         .build(),
                 new AcpListener() {
                     @Override
@@ -149,7 +159,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener,
                 });
     }
 
-    @OnClick({R.id.login_btn, R.id.tv_settings})
+    @OnClick({R.id.login_btn, R.id.tv_settings, R.id.forget_pwd})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.login_btn:// 登录
@@ -159,7 +169,69 @@ public class LoginActivity extends BaseActivity implements OnClickListener,
 //                chooseHttp();
                 startActivity(new Intent(this, IpSettingsActivity.class));
                 break;
+            case R.id.forget_pwd:
+                DialogTools.showEditDialog(this, "请输入用户名", "提示", "", new DialogTools.OnEditListener() {
+                    @Override
+                    public void onEdit(String content) {
+                        if (StringUtils.hasLength(content)) {
+                            forget(content);
+                        } else {
+                            IToast.toast("请输入用户名！");
+                        }
+                    }
+                });
+                break;
         }
+    }
+
+    private void forget(String content) {
+        if (!StringUtils.hasLength(App.getInstance().getApiURL())) {
+            App.getInstance().setApiURL("http://218.22.195.54:7007");
+        }
+        SpringViewHandler handler = new SpringViewHandler(this);
+        Task task = new GetForgetPwdTask(this);
+        Map<String, Object> params = new HashMap<>();
+        params.put("USERNAME", content);
+        handler.request(params, task);
+        handler.setListener(new OnPostListenter() {
+            @Override
+            public void OnPostSuccess(Map<String, Object> result) {
+                String json = (String) result.get(Key.RESULT);
+                JSONObject jo = null;
+                try {
+                    jo = new JSONObject(json);
+                    String name = "", phone = "";
+                    if (jo.has("NAME")) {
+                        name = jo.getString("NAME");
+                    }
+                    if (jo.has("PHONE")) {
+                        phone = jo.getString("PHONE");
+                    }
+                    showCallDialog(name, phone);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+            @Override
+            public void OnPostFail(Map<String, Object> result) {
+
+            }
+        });
+    }
+
+    private void showCallDialog(String name, String phone) {
+        DialogTools.showConfirmDialog(this, "提示", "请联系" + name + "进行密码重置，电话：" + phone, "立即联系", new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (StringUtils.hasLength(phone)) {
+                    SystemUtils.call(LoginActivity.this, phone);
+                } else {
+                    IToast.toast("号码为空！");
+                }
+            }
+        });
     }
 
     private void chooseHttp() {

@@ -44,7 +44,7 @@ dependencies {
 //    compile files('libs/AMap_Search_V6.1.0_20180330.jar')
 
     //3D地图so及jar
-    compile 'com.amap.api:3dmap:latest.integration'
+    compile 'com.amap.api:3dmap:6.4.1'
     //定位功能
     compile 'com.amap.api:location:latest.integration'
     //搜索功能

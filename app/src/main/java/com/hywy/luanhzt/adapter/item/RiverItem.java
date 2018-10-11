@@ -88,8 +88,8 @@ public class RiverItem extends AbstractFlexibleItem<RiverItem.EntityViewHolder> 
                 holder.tv_name.setText(river.getREACH_NAME());
             }
 
-            if(StringUtils.hasLength(river.getWATER_TYPE())){
-                switch (river.getWATER_TYPE()) {
+            if(StringUtils.hasLength(river.getREACH_LEVEL())){
+                switch (river.getREACH_LEVEL()) {
                     case "1":
                         holder.iv_status.setImageResource(R.drawable.ic_i);
                         break;

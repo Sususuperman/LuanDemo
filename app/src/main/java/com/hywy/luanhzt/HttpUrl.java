@@ -122,7 +122,7 @@ public class HttpUrl {
     /**
      * 我的直属河道列表
      */
-    public static final String RMS_APP_RIVERWAY_RIVERWAYLISTTREEAPP = "/RMS/app_riverway/riverwaylisttreeapp";
+    public static final String RMS_APP_RIVERWAY_APPRIVERLIST = "/RMS/app_riverway/appRiverList";
     /**
      * 河道详情
      */
@@ -324,6 +324,9 @@ public class HttpUrl {
     /* 我的河道详情~投诉列表
         */
     public static final String RMS_APP_COMPLAIN_NEW_GETALLLIST = "/RMS/app-complain_new/getAllList";
+    /* 找回密码
+      */
+    public static final String RMS_APP_LOGIN_R_FINDPASSWORD = "/RMS/app_Login_r/findPassword";
 
     /*********************************************************************************************************/
     public static String getServiceUrl(String url) {

@@ -4,11 +4,14 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -50,11 +53,14 @@ public class DialogTools {
     public static MaterialDialog showConfirmDialog(Context context, String title, String content, String okButton, final View.OnClickListener clickListener) {
         if (!StringUtils.hasLength(title))
             title = "提示";
+        if (!StringUtils.hasLength(okButton)) {
+            okButton = "确定";
+        }
 
         final MaterialDialog dialog = new MaterialDialog(context);
         dialog.setTitle(title);
         dialog.setMessage(content);
-        dialog.setPositiveButton("确定", new View.OnClickListener() {
+        dialog.setPositiveButton(okButton, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 clickListener.onClick(v);
@@ -76,10 +82,10 @@ public class DialogTools {
      * 显示确认和取消框
      *
      * @param context
-     * @param title         标题
-     * @param content       内容
-     * @param okButton      确定按钮
-     * @param cancleButton  取消按钮
+     * @param title        标题
+     * @param content      内容
+     * @param okButton     确定按钮
+     * @param cancleButton 取消按钮
      * @return
      */
     public static MaterialDialog showConfirmCancleDialog(Context context, String title, String content, String okButton, String cancleButton, final View.OnClickListener clickOkListener, final View.OnClickListener clickCancleListener) {
@@ -230,5 +236,69 @@ public class DialogTools {
         dialog.setView(view);
         dialog.show();
         return dialog;
+    }
+
+    /**
+     * 显示输入内容确认框
+     *
+     * @param context
+     * @param title   标题
+     * @return
+     */
+    public static MaterialDialog showEditDialog(final Context context, String hint, String title, String content, final OnEditListener onEditListener) {
+        final MaterialDialog dialog = new MaterialDialog(context);
+        View view = View.inflate(context, R.layout.dialog_edit_content, null);
+        final EditText editContent = (EditText) view.findViewById(R.id.edit_content);
+        final TextView titleTxt = (TextView) view.findViewById(R.id.title);
+        if (title != null && !title.equals(""))
+            titleTxt.setText(title);
+
+        editContent.setHint(hint == null ? "" : hint);
+        editContent.setText(content == null ? "" : content);
+        dialog.setPositiveButton("确定", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onEditListener.onEdit(editContent.getText().toString());
+                dialog.dismiss();
+            }
+        });
+        dialog.setNegativeButton("取消", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+
+        dialog.setCanceledOnTouchOutside(true);//点击外部区域 使弹框消失
+        dialog.setView(view);
+        dialog.show();
+        ViewUtils.setSelection(editContent);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                showKeyboard(editContent);
+            }
+        }, 200);
+
+        return dialog;
+    }
+
+    public interface OnEditListener {
+        void onEdit(String content);
+    }
+
+    public static void showKeyboard(EditText editText) {
+        if (editText != null) {
+            //设置可获得焦点
+            editText.setFocusable(true);
+            editText.setFocusableInTouchMode(true);
+            //请求获得焦点
+            editText.requestFocus();
+            //调用系统输入法
+            InputMethodManager inputManager = (InputMethodManager) editText
+                    .getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+            inputManager.showSoftInput(editText, 0);
+        }
     }
 }

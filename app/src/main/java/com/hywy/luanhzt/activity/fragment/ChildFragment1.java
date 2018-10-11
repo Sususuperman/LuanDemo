@@ -125,6 +125,10 @@ public class ChildFragment1 extends BaseFragment implements SwipeRefreshLayout.O
     VerticalTextview tvNotify;
     @Bind(R.id.tv_myriver)
     TextView tvMyriver;
+    @Bind(R.id.titlename)
+    TextView titleName;
+    @Bind(R.id.reach_level)
+    ImageView reachLevel;
 
     private static App appContext;
     ;
@@ -255,7 +259,7 @@ public class ChildFragment1 extends BaseFragment implements SwipeRefreshLayout.O
 
         initListVisibility();
 
-        if(StringUtils.hasLength(App.getInstance().getAccount().getPARENT_ID())){
+        if (StringUtils.hasLength(App.getInstance().getAccount().getPARENT_ID())) {
             if (App.getInstance().getAccount().getPARENT_ID().equals("2")) {
                 tvMyriver.setText("我的河道");
             } else {
@@ -321,6 +325,21 @@ public class ChildFragment1 extends BaseFragment implements SwipeRefreshLayout.O
 //                        mAdapter.addItem(item);
 //                    }
 //                    mAdapter.notifyDataSetChanged();
+                    for (int i = 0; i < list.size(); i++) {
+                        River river = list.get(i);
+                        if (river.getTYPE() == 0) {
+                            list.remove(i);
+                            getActivity().findViewById(R.id.titlename_layout).setVisibility(View.VISIBLE);
+                            titleName.setText(river.getREACH_NAME());
+                            RiverGridAdapter.initImg(reachLevel, river);
+                            getActivity().findViewById(R.id.titlename_layout).setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    RiverDetailsActivity.startAction(getActivity(), river);
+                                }
+                            });
+                        }
+                    }
                     riverGridAdapter.setList(list);
                     riverGridAdapter.notifyDataSetChanged();
                 }

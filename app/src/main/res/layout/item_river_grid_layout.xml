@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:layout_marginBottom="@dimen/dimen_3dp"
     android:paddingTop="@dimen/dimen_10dp"
-    android:background="@drawable/bg_btn_default"
+    android:background="@color/white"
     android:orientation="horizontal"
    >
 
