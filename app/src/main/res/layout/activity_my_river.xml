@@ -32,6 +32,30 @@
             android:padding="@dimen/dimen_10dp"
             android:src="@drawable/icon_down_view" />
     </RelativeLayout>
+    <LinearLayout
+        android:id="@+id/titlename_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/activity_bg_default"
+        android:orientation="horizontal"
+        android:paddingBottom="5dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="@dimen/dimen_10dp"
+        android:paddingTop="5dp"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/titlename"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1" />
+
+        <ImageView
+            android:id="@+id/reach_level"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
 
     <com.cs.common.view.SwipeRefreshview
         android:id="@+id/swipeRefresh"

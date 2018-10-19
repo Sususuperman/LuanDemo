@@ -18,6 +18,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -87,6 +88,11 @@ public class LoginActivity extends BaseActivity implements OnClickListener,
     PercentLinearLayout bottomBg;
     @Bind(R.id.scrollView)
     ScrollView scrollView;
+    @Bind(R.id.rb1)
+    RadioButton btn1;
+    @Bind(R.id.rb2)
+    RadioButton btn2;
+
 
     //    @Bind(R.id.tv_http)
 //    TextView tvHttp;
@@ -159,11 +165,14 @@ public class LoginActivity extends BaseActivity implements OnClickListener,
                 });
     }
 
-    @OnClick({R.id.login_btn, R.id.tv_settings, R.id.forget_pwd})
+    @OnClick({R.id.login_btn, R.id.tv_settings, R.id.forget_pwd, R.id.shuoming})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.login_btn:// 登录
                 login();
+                break;
+            case R.id.shuoming:// 登录
+                IToast.toast("在水利局WiFi环境下请使用内网");
                 break;
             case R.id.tv_settings:
 //                chooseHttp();
@@ -186,7 +195,11 @@ public class LoginActivity extends BaseActivity implements OnClickListener,
 
     private void forget(String content) {
         if (!StringUtils.hasLength(App.getInstance().getApiURL())) {
-            App.getInstance().setApiURL("http://218.22.195.54:7007");
+            if (btn1.isChecked()) {
+                App.getInstance().setApiURL("http://218.22.195.54:7007");
+            } else if (btn2.isChecked()) {
+                App.getInstance().setApiURL("http://10.34.97.20:7003");
+            }
         }
         SpringViewHandler handler = new SpringViewHandler(this);
         Task task = new GetForgetPwdTask(this);
@@ -226,7 +239,20 @@ public class LoginActivity extends BaseActivity implements OnClickListener,
             @Override
             public void onClick(View view) {
                 if (StringUtils.hasLength(phone)) {
-                    SystemUtils.call(LoginActivity.this, phone);
+                    Acp.getInstance(LoginActivity.this).request(new AcpOptions.Builder()
+                                    .setPermissions(Manifest.permission.CALL_PHONE)
+                                    .build(),
+                            new AcpListener() {
+                                @Override
+                                public void onGranted() {
+                                    SystemUtils.call(LoginActivity.this, phone);
+                                }
+
+                                @Override
+                                public void onDenied(List<String> permissions) {
+
+                                }
+                            });
                 } else {
                     IToast.toast("号码为空！");
                 }
@@ -282,7 +308,12 @@ public class LoginActivity extends BaseActivity implements OnClickListener,
     private void login(Map<String, Object> params) {
         App app = (App) getApplication();
         if (!StringUtils.hasLength(app.getApiURL())) {
-            app.setApiURL("http://218.22.195.54:7007");
+            if (btn1.isChecked()) {
+                app.setApiURL("http://218.22.195.54:7007");
+            } else if (btn2.isChecked()) {
+                app.setApiURL("http://10.34.97.20:7007");
+            }
+//            app.setApiURL("http://218.22.195.54:7007");
         }
 //        app.setApiURL(tvHttp.getText().toString() + "://" + etIp.getText().toString().trim() + ":" + etPort.getText().toString());
         // 有网络，网络登陆
@@ -308,6 +339,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener,
                         failure = getString(R.string.login_failure);
                     }
                     Toast.makeText(LoginActivity.this, failure, Toast.LENGTH_SHORT).show();
+                    app.setApiURL("");
                 }
             });
         } else {// 无网络，不能登陆，提示用户

@@ -256,6 +256,7 @@
         <activity android:name=".activity.UserTree2Activity" />
         <activity android:name=".activity.UpdatePasswordActivity"></activity>
         <activity android:name=".activity.ComplainInfoActivity"></activity>
+        <activity android:name=".activity.ChooseAddressActivity"></activity>
     </application>
 
 </manifest>

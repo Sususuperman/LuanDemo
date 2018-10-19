@@ -76,7 +76,7 @@ public class GetHzContactListTask extends BaseRequestTask {
 
     public EvaluatedFormsExpandableItem newAnimatorItem(HzContact hzContact) {
         if (hzContact != null) {
-            EvaluatedFormsExpandableItem animatorItem = new EvaluatedFormsExpandableItem(hzContact.getADNM());
+            EvaluatedFormsExpandableItem animatorItem = new EvaluatedFormsExpandableItem(hzContact.getADNM(), hzContact.getTYPE());
             List<HzContact.DealsBean> dealsBeans = hzContact.getDeals();
             int size = dealsBeans.size();
             for (int i = 0; i < size; i++) {

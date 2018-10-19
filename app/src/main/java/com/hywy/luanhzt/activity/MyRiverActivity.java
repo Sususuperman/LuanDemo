@@ -5,6 +5,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cs.android.task.Task;
@@ -13,6 +14,7 @@ import com.cs.common.base.BaseToolbarActivity;
 import com.cs.common.utils.PhoneUtil;
 import com.cs.common.view.SwipeRefreshview;
 import com.hywy.luanhzt.R;
+import com.hywy.luanhzt.adapter.RiverGridAdapter;
 import com.hywy.luanhzt.adapter.item.RiverItem;
 import com.hywy.luanhzt.adapter.item.SpinnerItem;
 import com.hywy.luanhzt.entity.River;
@@ -45,6 +47,10 @@ public class MyRiverActivity extends BaseToolbarActivity implements FlexibleAdap
     RecyclerView recyclerview;
     @Bind(R.id.title_name)
     TextView title;
+    @Bind(R.id.titlename)
+    TextView titleName;
+    @Bind(R.id.reach_level)
+    ImageView reachLevel;
 
     private DialogPlus dialogPlus;
 
@@ -140,6 +146,22 @@ public class MyRiverActivity extends BaseToolbarActivity implements FlexibleAdap
                 if (result.get(Key.RESULT) != null) {
                     List<River> list = (List<River>) result.get(Key.RESULT);
                     initSpinner(list);
+
+                    for (int i = 0; i < list.size(); i++) {
+                        River river = list.get(i);
+                        if (river.getTYPE() == 0) {
+                            list.remove(i);
+                            findViewById(R.id.titlename_layout).setVisibility(View.VISIBLE);
+                            titleName.setText(river.getREACH_NAME());
+                            RiverGridAdapter.initImg(reachLevel, river);
+                            findViewById(R.id.titlename_layout).setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    RiverDetailsActivity.startAction(MyRiverActivity.this, river);
+                                }
+                            });
+                        }
+                    }
                 }
             }
         });

@@ -7,8 +7,8 @@ android {
         applicationId "com.hywy.luanhzt"
         minSdkVersion 19
         targetSdkVersion 24
-        versionCode 11
-        versionName "v0.8.11"
+        versionCode 12
+        versionName "v0.8.12"
 
         multiDexEnabled true
 
@@ -114,4 +114,6 @@ dependencies {
     //海康威视视频sdk
     //    implementation files('libs/ivms_8700_sdk_library.jar')
     implementation files('libs/ivms_8700_sdk_library.jar')
+    //Lottie是一个适用于Android和iOS的移动库，用于解析使用Bodymovin导出为json的Adobe After Effects动画，并在移动设备上呈现它们
+    implementation 'com.airbnb.android:lottie:1.0.1'
 }

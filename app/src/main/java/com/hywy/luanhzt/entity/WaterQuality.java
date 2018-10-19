@@ -48,7 +48,7 @@ public class WaterQuality implements Parcelable {
     private String TEL;
     private String ADMAUTH;//管理机构
     private String TP;//总磷
-    private String F;//氟化物
+    private String F = "1.0";//氟化物
     private String CODMN;// 高锰酸钾指数
     private String LEVEL_CODE;//河流类别
     private String REACH_NAME;//河段名称

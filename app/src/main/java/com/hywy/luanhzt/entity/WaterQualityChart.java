@@ -22,7 +22,7 @@ public class WaterQualityChart implements Parcelable {
     private String AVG_COND;//电导率
     private String AVG_DOX;//溶解氧
     private String AVG_TP;//总磷
-    private String AVG_F;//氟化物
+    private String AVG_F = "1.0";//氟化物
     private String AVG_CODMN;//高锰酸盐
     private String SPT;//时间
 

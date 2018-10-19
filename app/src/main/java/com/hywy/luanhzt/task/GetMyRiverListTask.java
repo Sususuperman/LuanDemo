@@ -43,8 +43,10 @@ public class GetMyRiverListTask extends BaseRequestTask {
         List<RiverItem> items = new ArrayList<>();
         if (StringUtils.isNotNullList(list)) {
             for (River river : list) {
-                RiverItem item = new RiverItem(river);
-                items.add(item);
+                if(river.getTYPE()!=0){
+                    RiverItem item = new RiverItem(river);
+                    items.add(item);
+                }
             }
             result.put(Key.ITEMS, items);
         }

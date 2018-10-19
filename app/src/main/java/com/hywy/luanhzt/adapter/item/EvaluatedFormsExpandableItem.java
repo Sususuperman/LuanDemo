@@ -27,10 +27,12 @@ import eu.davidea.viewholders.ExpandableViewHolder;
 public class EvaluatedFormsExpandableItem extends AbstractExpandableHeaderItem<EvaluatedFormsExpandableItem.AnimatorExpandableViewHolder, ContactSubItem> {
 
     private String title;
+    private int type;
 
-    public EvaluatedFormsExpandableItem(String title) {
+    public EvaluatedFormsExpandableItem(String title, int type) {
         super();
         this.title = title;
+        this.type = type;
         setExpanded(false);//Start collapsed
         setSwipeable(true);
     }
@@ -71,6 +73,11 @@ public class EvaluatedFormsExpandableItem extends AbstractExpandableHeaderItem<E
     public void bindViewHolder(FlexibleAdapter adapter, AnimatorExpandableViewHolder holder, int position, List payloads) {
 
         holder.mTitle.setItemText(title + "");
+        if (type == 2) {
+            holder.mTitle.setLeftIcon_visibility(View.INVISIBLE);
+        }else {
+            holder.mTitle.setLeftIcon_visibility(View.GONE);
+        }
         holder.mTitle.setRightIcon(R.drawable.bt_arrow_down_gray);
     }
 

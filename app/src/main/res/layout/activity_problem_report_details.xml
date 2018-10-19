@@ -152,7 +152,6 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginBottom="65dp"
                 android:orientation="vertical">
 
 
@@ -186,26 +185,24 @@
                 </LinearLayout>
 
 
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dimen_5dp"
                     android:background="@drawable/bg_btn_default"
                     android:orientation="vertical"
-                    android:paddingBottom="50dp"
                     android:paddingLeft="25dp">
 
 
-                        <TextView
-                            android:id="@+id/tv1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:paddingBottom="@dimen/dimen_5dp"
-                            android:paddingTop="@dimen/dimen_5dp"
-                            android:text="附件："
-                            android:textColor="@color/font_gray"
-                            android:textSize="15sp" />
+                    <TextView
+                        android:id="@+id/tv1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="@dimen/dimen_5dp"
+                        android:paddingTop="@dimen/dimen_5dp"
+                        android:text="附件："
+                        android:textColor="@color/font_gray"
+                        android:textSize="15sp" />
 
 
                     <GridView
@@ -216,6 +213,21 @@
                 </LinearLayout>
             </LinearLayout>
 
+            <com.hywy.luanhzt.view.MyRecycleView
+                android:id="@+id/recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="65dp"
+                android:layout_marginTop="@dimen/dimen_5dp" />
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/animation_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:lottie_autoPlay="true"
+                app:lottie_fileName="animation.json"
+                app:lottie_loop="true" />
         </LinearLayout>
     </com.hywy.luanhzt.view.MyScrollview>
 

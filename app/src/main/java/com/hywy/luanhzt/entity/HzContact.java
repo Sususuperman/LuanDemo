@@ -13,7 +13,7 @@ import java.util.List;
  * @date 2018/7/24
  */
 
-public class HzContact {
+public class HzContact implements Parcelable {
 
     /**
      * NT : 2
@@ -27,6 +27,16 @@ public class HzContact {
     private String ADCD;
     private String ADNM;
     private String UPADCD;
+    private int TYPE;//（1-本级，2-下级)
+
+    public int getTYPE() {
+        return TYPE;
+    }
+
+    public void setTYPE(int TYPE) {
+        this.TYPE = TYPE;
+    }
+
     private List<DealsBean> deals;
 
     public String getNT() {
@@ -196,4 +206,43 @@ public class HzContact {
             }
         };
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.NT);
+        dest.writeString(this.ADCD);
+        dest.writeString(this.ADNM);
+        dest.writeString(this.UPADCD);
+        dest.writeInt(this.TYPE);
+        dest.writeTypedList(this.deals);
+    }
+
+    public HzContact() {
+    }
+
+    protected HzContact(Parcel in) {
+        this.NT = in.readString();
+        this.ADCD = in.readString();
+        this.ADNM = in.readString();
+        this.UPADCD = in.readString();
+        this.TYPE = in.readInt();
+        this.deals = in.createTypedArrayList(DealsBean.CREATOR);
+    }
+
+    public static final Parcelable.Creator<HzContact> CREATOR = new Parcelable.Creator<HzContact>() {
+        @Override
+        public HzContact createFromParcel(Parcel source) {
+            return new HzContact(source);
+        }
+
+        @Override
+        public HzContact[] newArray(int size) {
+            return new HzContact[size];
+        }
+    };
 }

@@ -28,7 +28,7 @@
     <string name="login">登录</string>
     <string name="fast_pass">快捷通道</string>
     <string name="register"><u>用户注册</u></string>
-    <string name="forget_password">忘记密码</string>
+    <string name="forget_password">忘记密码？</string>
     <string name="waitDialog_main_menu">首页菜单加载中...</string>
     <string name="login_failure">登录失败！</string>
     <string name="exit_define">确定要退出吗？</string>
@@ -123,4 +123,5 @@
     <string name="text_zonglin">总磷(TP)</string>
     <string name="text_fuhuawu">氟化物(F)</string>
     <string name="text_gaomeng">高锰酸盐指数</string>
+    <string name="search">搜索</string>
 </resources>

@@ -23,7 +23,6 @@ public class RiverCourse implements Parcelable {
      * STLC : 六安市霍邱县
      */
 
-    private int Q;
     private String STCD;//测站编码
     private String RVNM;//河流名称
     private String STNM;
@@ -47,13 +46,6 @@ public class RiverCourse implements Parcelable {
         this.REACH_NAME = REACH_NAME;
     }
 
-    public int getQ() {
-        return Q;
-    }
-
-    public void setQ(int Q) {
-        this.Q = Q;
-    }
 
     public String getSTCD() {
         return STCD;
@@ -169,7 +161,6 @@ public class RiverCourse implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(this.Q);
         dest.writeString(this.STCD);
         dest.writeString(this.RVNM);
         dest.writeString(this.STNM);
@@ -187,7 +178,6 @@ public class RiverCourse implements Parcelable {
     }
 
     protected RiverCourse(Parcel in) {
-        this.Q = in.readInt();
         this.STCD = in.readString();
         this.RVNM = in.readString();
         this.STNM = in.readString();

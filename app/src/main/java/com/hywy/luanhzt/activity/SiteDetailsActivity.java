@@ -670,7 +670,7 @@ public class SiteDetailsActivity extends BaseToolbarActivity {
         leftAxis.setLabelCount(5);
         leftAxis.setSpaceTop(15f);
 //        leftAxis.enableGridDashedLine(10f, 10f, 0f); //设置横向表格为虚线
-        leftAxis.setAxisMinimum(0f);//设置柱状图底部从0开始
+//        leftAxis.setAxisMinimum(0f);//设置柱状图底部从0开始
         leftAxis.enableGridDashedLine(10f, 5f, 0f);
 //        leftAxis.setValueFormatter(new IAxisValueFormatter() {
 //            @Override
@@ -682,7 +682,7 @@ public class SiteDetailsActivity extends BaseToolbarActivity {
         YAxis rightAxis = mLineChart.getAxisRight();
         rightAxis.setLabelCount(5, false);
         rightAxis.setSpaceTop(15f);
-        rightAxis.setAxisMinimum(0f);//设置柱状图底部从0开始
+//        rightAxis.setAxisMinimum(0f);//设置柱状图底部从0开始
         rightAxis.enableGridDashedLine(10f, 5f, 0f);
 
     }

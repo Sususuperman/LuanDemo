@@ -97,6 +97,7 @@ public class ClearActivity extends Activity {
     private void exit() {
         clearUserData();
         clearMenuData();
+        clearIpData();
         Intent intent = new Intent(this, LoginActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
@@ -138,6 +139,12 @@ public class ClearActivity extends Activity {
 //                finish();
             }
         }, 3000);
+    }
+
+    private void clearIpData() {
+        AccountDao dao = new AccountDao(this);
+        dao.delete();
+        app.setApiURL("");
     }
 
 }

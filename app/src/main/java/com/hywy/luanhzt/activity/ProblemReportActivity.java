@@ -231,7 +231,7 @@ public class ProblemReportActivity extends BaseToolbarActivity implements Images
         intent.putExtra("logId", logId);
         intent.putExtra("latitude", latitude);
         intent.putExtra("longtitude", longtitude);
-        activity.startActivityForResult(intent,request_activity_mobilework);
+        activity.startActivityForResult(intent, request_activity_mobilework);
     }
 
     public static void startActionForResult(Activity activity, ProblemReport problemReport) {
@@ -264,9 +264,10 @@ public class ProblemReportActivity extends BaseToolbarActivity implements Images
         toggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (b) {
-                    RequestPermmisons();
-                }
+//                if (b) {
+                    ChooseAddressActivity.startAction(ProblemReportActivity.this, 0, 0, "");
+//                    RequestPermmisons();
+//                }
             }
         });
     }
@@ -451,7 +452,7 @@ public class ProblemReportActivity extends BaseToolbarActivity implements Images
         return attachMent;
     }
 
-    @OnClick({R.id.layout_address, R.id.layout_river, R.id.layout_event,R.id.layout_touser})
+    @OnClick({R.id.layout_address, R.id.layout_river, R.id.layout_event, R.id.layout_touser})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.layout_address:

@@ -68,7 +68,7 @@ public class HttpUrl {
     /**
      * 河道水文
      */
-    public static final String RMS_APP_APP_STRIVER_STLIST = "/RMS/app-striver/stlist";
+    public static final String RMS_APP_APP_STRIVER_STLIST = "/RMS/app-striver/stlist2";
 
     /**
      * 取水口
@@ -308,7 +308,7 @@ public class HttpUrl {
     /**
      * 事务管理~未处理
      */
-    public static final String RMS_APP_EVENT_PROCESS_APP_GETALLLIST = "/RMS/app-event_process/app-getAllList";
+    public static final String RMS_APP_EVENT_PROCESS_APP_GETALLLIST = "/RMS/app-event_process/getAllList";
     /* 通知公告发布
   */
     public static final String RMS_APP_TZGG_SAVE = "/RMS/app_tzgg/save";

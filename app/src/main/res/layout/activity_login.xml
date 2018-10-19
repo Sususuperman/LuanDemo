@@ -128,6 +128,41 @@
                     android:textColor="@color/font_3"
                     android:textSize="14sp" />
 
+                <RadioGroup
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/rb1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        android:text="外网"
+                        android:textColor="@drawable/bg_http_text"
+                        android:textSize="15sp" />
+
+                    <RadioButton
+                        android:id="@+id/rb2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:text="内网"
+                        android:textColor="@drawable/bg_http_text"
+                        android:textSize="15sp" />
+
+                    <ImageView
+                        android:id="@+id/shuoming"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_margin="@dimen/dimen_5dp"
+                        android:src="@drawable/ic_gantan"
+                         />
+                </RadioGroup>
+
+
             </com.cs.common.view.percent.PercentLinearLayout>
         </com.cs.common.view.percent.PercentLinearLayout>
     </ScrollView>
