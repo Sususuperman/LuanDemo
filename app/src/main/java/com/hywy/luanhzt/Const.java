@@ -26,19 +26,7 @@ public abstract class Const {
 
     public static final int PAGE = 1; //页数
 
-    //项目的根路径
-    public static final String PATH = "/sefeadmin/";
-    // log日志存放的路径
-    public static final String LOGPATH="/sefeadmin/log/";
     public static final String PLUGIN_APK_PATH = "/hywy/apk";
-    // 报告文件存放路径
-    public static final String SYSTEM_MSG_PATH = "/sefeadmin/sysmessage/";
-    // 报告类型文件存放路径
-    public static final String TAG_PATH = "/sefeadmin/tag/";
-    public static final String FORMS_PATH = "/sefeadmin/forms/";
-    public static final String EMERGENCY_PATH = "/sefeadmin/emergency/";
-    //用户头像保存路径
-    public static final String USER_PATH = "/sefeadmin/user/";
     // 本地图片存放路径
     public static final String IMGAGE_PATH = "images/";
     // 本地音频存放路径

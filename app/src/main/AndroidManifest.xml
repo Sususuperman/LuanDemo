@@ -257,6 +257,8 @@
         <activity android:name=".activity.UpdatePasswordActivity"></activity>
         <activity android:name=".activity.ComplainInfoActivity"></activity>
         <activity android:name=".activity.ChooseAddressActivity"></activity>
+        <activity android:name=".activity.BaseMapSearchActivity"></activity>
+        <activity android:name=".activity.SearchAddressActivity"></activity>
     </application>
 
 </manifest>

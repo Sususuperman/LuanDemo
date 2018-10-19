@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.animation.Interpolator;
 import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
+import android.widget.SearchView;
 import android.widget.TextView;
 
 import com.amap.api.location.AMapLocation;
@@ -104,7 +105,6 @@ public class ChooseAddressActivity extends BaseToolbarActivity {
 
     public void updateTitle() {
         setTitleBulider(new Bulider().backicon(R.drawable.ic_arrow_back_white_24dp).title("位置"));
-
     }
 
     private void init() {
@@ -236,7 +236,7 @@ public class ChooseAddressActivity extends BaseToolbarActivity {
 
     @OnClick(R.id.search)
     public void search() {
-//        SearchAddressActivity.startAction(this);
+        SearchAddressActivity.startAction(this);
     }
 
     @OnClick(R.id.ic_location)
@@ -395,10 +395,6 @@ public class ChooseAddressActivity extends BaseToolbarActivity {
         hidePoi();
     }
 
-    /**
-     * 如果是隐患不需要显示大头针
-     * 物资和人员需要显示大头针
-     */
     private void hidePoi() {
         if (isHaveLocal()) {
             mPinOverlay.getMyMarker().setVisible(true);
@@ -442,14 +438,20 @@ public class ChooseAddressActivity extends BaseToolbarActivity {
                 Snackbar.make(mapView, "无效的地址", Snackbar.LENGTH_SHORT).show();
             }
 
+        } else if (item.getItemId() == R.id.action_search) {
+            SearchAddressActivity.startAction(this);
         }
         return super.onOptionsItemSelected(item);
     }
 
 
+    SearchView searchView;
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.save, menu);
+        getMenuInflater().inflate(R.menu.searchandsave, menu);
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+        searchView = (SearchView) searchItem.getActionView();
         return super.onCreateOptionsMenu(menu);
     }
 
