@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.hywy.luanhzt">
 
+    <uses-permission android:name="android.permission.FLASHLIGHT" />
+
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_GPS" />
@@ -259,6 +261,7 @@
         <activity android:name=".activity.ChooseAddressActivity"></activity>
         <activity android:name=".activity.BaseMapSearchActivity"></activity>
         <activity android:name=".activity.SearchAddressActivity"></activity>
+        <activity android:name=".activity.CameraActivity"></activity>
     </application>
 
 </manifest>

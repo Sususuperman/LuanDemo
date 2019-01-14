@@ -126,6 +126,20 @@
             android:textColor="@color/font_3" />
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignBottom="@+id/item_img"
+        android:layout_marginRight="@dimen/dimen_5dp"
+        android:layout_marginBottom="@dimen/dimen_5dp"
+        android:background="@drawable/bg_unupload"
+        android:textColor="@color/white"
+        android:textSize="13sp"
+        android:visibility="gone"
+        android:text="未提交"  />
+
     <View
         android:layout_width="match_parent"
         android:layout_height="5dp"

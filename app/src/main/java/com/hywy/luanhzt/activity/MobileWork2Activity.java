@@ -47,6 +47,8 @@ import com.esri.arcgisruntime.symbology.SimpleLineSymbol;
 import com.hywy.luanhzt.HttpUrl;
 import com.hywy.luanhzt.R;
 import com.hywy.luanhzt.adapter.PlanListAdapter;
+import com.hywy.luanhzt.dao.LogDao;
+import com.hywy.luanhzt.entity.Inspection;
 import com.hywy.luanhzt.entity.Plan;
 import com.hywy.luanhzt.key.Key;
 import com.hywy.luanhzt.task.GetPlanListTask;
@@ -178,7 +180,7 @@ public class MobileWork2Activity extends BaseActivity implements OnItemClickList
         ArcGISTiledLayer tiledLayer2 = new ArcGISTiledLayer("http://218.22.195.54:7011/arcgis/rest/services/liuanct/MapServer");
 //        Basemap basemap = new Basemap(tiledLayer);
 //        ArcGISMap mMap = new ArcGISMap(basemap);
-        ArcGISMap  mMap = new ArcGISMap();
+        ArcGISMap mMap = new ArcGISMap();
         mMap.getBasemap().getBaseLayers().add(tiledLayer);
         mMap.getBasemap().getBaseLayers().add(tiledLayer2);
         mMapView.setMap(mMap);
@@ -222,7 +224,7 @@ public class MobileWork2Activity extends BaseActivity implements OnItemClickList
 
     private void RequestPermmisons() {
         Acp.getInstance(this).request(new AcpOptions.Builder()
-                        .setPermissions(Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION)
+                        .setPermissions(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)
                         .build(),
                 new AcpListener() {
                     @Override
@@ -391,6 +393,22 @@ public class MobileWork2Activity extends BaseActivity implements OnItemClickList
                 if (tvPlan.getTag() != null) {
                     findViewById(R.id.info_layout).setVisibility(View.VISIBLE);
                 }
+                LogDao dao = new LogDao(this);
+                List<Inspection> inspections = dao.select();
+                if (StringUtils.isNotNullList(inspections) && inspections.size() >= 3) {
+                    DialogTools.showConfirmCancleDialog(this, "提示", "未提交的巡查日志过多，请处理后再进行巡查", "立即处理", "暂不处理", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            startActivity(new Intent(MobileWork2Activity.this, AllXunchaActivity.class));
+                        }
+                    }, new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            finish();
+                        }
+                    });
+
+                }
                 if (!isStart) {
                     if (mLocationDisplay.isStarted()) {
 //                        addLocationChangedListener();
@@ -416,13 +434,14 @@ public class MobileWork2Activity extends BaseActivity implements OnItemClickList
 //                else {
 //                    IToast.toast("请选择巡查计划");
 //                }
+
                 break;
             case R.id.iv_end://结束巡查
                 if (isStart) {
                     tvTime.stop();
                     if (tvTime.getBase() != 0) {
                         finish();
-                        CreateLogActivity.startAction(this, plan, array, logId);
+                        CreateLogActivity.startAction(this, plan, array.toString(), logId);
                     }
                 }
                 break;

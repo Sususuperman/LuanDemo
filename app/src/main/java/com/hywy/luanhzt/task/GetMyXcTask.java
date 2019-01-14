@@ -3,11 +3,14 @@ package com.hywy.luanhzt.task;
 import android.content.Context;
 import android.util.Log;
 
+import com.cs.common.utils.IToast;
 import com.cs.common.utils.StringUtils;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.hywy.luanhzt.HttpUrl;
 import com.hywy.luanhzt.adapter.item.InspectionItem;
+import com.hywy.luanhzt.dao.LogDao;
+import com.hywy.luanhzt.dao.ProblemDao;
 import com.hywy.luanhzt.entity.Inspection;
 import com.hywy.luanhzt.key.Key;
 
@@ -54,9 +57,18 @@ public class GetMyXcTask extends BaseRequestTask {
             int size = list.size();
             for (int i = 0; i < size; i++) {
                 Inspection r = list.get(i);
-                Log.i("points", r.getPoints().size() + "");
                 InspectionItem item = new InspectionItem(r);
                 items.add(item);
+            }
+        }
+
+        //查询数据库追加list
+        List<InspectionItem> items_local = new ArrayList<>();
+        LogDao dao = new LogDao(context);
+        if (StringUtils.isNotNullList(dao.select())) {
+            for (Inspection inspection : dao.select()) {
+                InspectionItem item = new InspectionItem(inspection);
+                items_local.add(item);
             }
         }
         List<InspectionItem> start_items;
@@ -68,6 +80,7 @@ public class GetMyXcTask extends BaseRequestTask {
         if (index != 0) {
             result.put(Key.ITEMS, start_items);
         } else {
+            items.addAll(0, items_local);
             result.put(Key.ITEMS, items);
         }
         return result;

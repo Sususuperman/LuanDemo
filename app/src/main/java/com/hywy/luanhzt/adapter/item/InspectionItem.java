@@ -65,6 +65,7 @@ public class InspectionItem extends AbstractFlexibleItem<InspectionItem.EntityVi
         TextView time;
         LinearLayout layout_selected;
         ImageView item_img;
+        TextView type;
 
         public EntityViewHolder(View view, FlexibleAdapter adapter) {
             super(view, adapter);
@@ -74,6 +75,7 @@ public class InspectionItem extends AbstractFlexibleItem<InspectionItem.EntityVi
             address = (TextView) view.findViewById(R.id.address);
             time = (TextView) view.findViewById(R.id.time);
             item_img = (ImageView) view.findViewById(R.id.item_img);
+            type = (TextView) view.findViewById(R.id.type);
         }
     }
 
@@ -104,38 +106,10 @@ public class InspectionItem extends AbstractFlexibleItem<InspectionItem.EntityVi
         } else {
             ImageLoaderUtils.display(holder.item_img.getContext(), holder.item_img, R.drawable.icon_empty_image);
         }
-
-//
-//        if (StringUtils.hasLength(data.getForm_name()))
-//            holder.check_content.setText(data.getForm_name());
-//        else
-//            holder.check_content.setText("");
-//
-//        holder.final_score.setText(data.getFinal_score() + "");
-//        holder.risk_num.setText(holder.risk_num.getContext().getString(R.string.risk_num, data.getHidden_danger_total()));
-//        holder.address.setText(data.getAddress());
-//
-//
-//        if (headerItem != null) {
-//            String[] date = DateUtils.transforMillToDate(data.getCreated_at() * 1000).split("-");
-//            holder.day.setVisibility(View.VISIBLE);
-//            holder.monday.setVisibility(View.VISIBLE);
-//            holder.monday.setText(date[1] + "月");
-//            holder.day.setText(date[2]);
-//        } else {
-//            holder.day.setVisibility(View.INVISIBLE);
-//            holder.monday.setVisibility(View.INVISIBLE);
-//        }
-//        if (data.getStatus() == Tasks.STATUS_NON) {
-//            holder.task_non.setVisibility(View.VISIBLE);
-//            holder.layout_selected.setBackgroundResource(R.color.primary_default);
-//            holder.final_score.setVisibility(View.GONE);
-//            holder.risk_num.setVisibility(View.GONE);
-//        } else {
-//            holder.risk_num.setVisibility(View.VISIBLE);
-//            holder.final_score.setVisibility(View.VISIBLE);
-//            holder.task_non.setVisibility(View.GONE);
-//            holder.layout_selected.setBackgroundResource(R.color.white);
-//        }
+        if (data.getDATA_TYPE().equals(Inspection.DATA_LOCAL)) {
+            holder.type.setVisibility(View.VISIBLE);
+        } else {
+            holder.type.setVisibility(View.GONE);
+        }
     }
 }

@@ -1,6 +1,8 @@
 package com.hywy.luanhzt.activity;
 
+import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -31,19 +33,26 @@ import com.hywy.luanhzt.adapter.ImagesAdapter;
 import com.hywy.luanhzt.adapter.SpinnerListAdapter;
 import com.hywy.luanhzt.adapter.item.OptionsItem;
 import com.hywy.luanhzt.app.App;
+import com.hywy.luanhzt.dao.LogDao;
 import com.hywy.luanhzt.entity.Adnm;
 import com.hywy.luanhzt.entity.AttachMent;
 import com.hywy.luanhzt.entity.EventSupervise;
+import com.hywy.luanhzt.entity.Inspection;
 import com.hywy.luanhzt.entity.Plan;
+import com.hywy.luanhzt.entity.ProblemReport;
 import com.hywy.luanhzt.entity.River;
 import com.hywy.luanhzt.key.Key;
 import com.hywy.luanhzt.task.GetAddressListTask;
 import com.hywy.luanhzt.task.GetEventTypeTask;
 import com.hywy.luanhzt.task.GetRiverListInMobileTask;
 import com.hywy.luanhzt.task.PostCreateLogTask;
+import com.hywy.luanhzt.utils.SystemUtils;
 import com.hywy.luanhzt.view.dialog.dialogplus.DialogPlus;
 import com.hywy.luanhzt.view.dialog.dialogplus.ListHolder;
 import com.hywy.luanhzt.view.dialog.dialogplus.OnItemClickListener;
+import com.mylhyl.acp.Acp;
+import com.mylhyl.acp.AcpListener;
+import com.mylhyl.acp.AcpOptions;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -95,6 +104,8 @@ public class CreateLogActivity extends BaseToolbarActivity implements ImagesAdap
     private List<Adnm> adnms;
     private long logId;
 
+    private Inspection inspection;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -103,17 +114,22 @@ public class CreateLogActivity extends BaseToolbarActivity implements ImagesAdap
         initData();
     }
 
+    public static void startAction(Activity activity, Plan plan, String array, long logId) {
+        startAction(activity, plan, array, logId, null);
+    }
 
-    public static void startAction(Activity activity, Plan plan, JSONArray array, long logId) {
+    public static void startAction(Activity activity, Plan plan, String array, long logId, Inspection inspection) {
         Intent intent = new Intent(activity, CreateLogActivity.class);
         intent.putExtra("plan", plan);
-        intent.putExtra("array", array.toString());
+        intent.putExtra("array", array);
         intent.putExtra("logId", logId);
+        intent.putExtra("inspection", inspection);
         activity.startActivity(intent);
     }
 
     private void init() {
         plan = getIntent().getParcelableExtra("plan");
+        inspection = getIntent().getParcelableExtra("inspection");
         jsonArray = getIntent().getStringExtra("array");
         logId = getIntent().getLongExtra("logId", 0);
         setTitleBulider(new Bulider().backicon(R.drawable.ic_arrow_back_white_24dp).title("新建巡河日志"));
@@ -122,7 +138,6 @@ public class CreateLogActivity extends BaseToolbarActivity implements ImagesAdap
         imageAdapter.setOnDeleteListener(this);
         imageGrid.setOnItemClickListener(this);
         spinnerAdapter1 = new SpinnerListAdapter(this);
-        addDefaultImage();
 
         mAdapter = new BaseListFlexAdapter(this);
         recyclerView.setLayoutManager(new FullyLinearLayoutManager(this));
@@ -145,7 +160,36 @@ public class CreateLogActivity extends BaseToolbarActivity implements ImagesAdap
         }
         tvUser.setText(App.getInstance().getAccount().getNAME());//当前登录人
         tvTime.setText(DateUtils.transforMillToDate(System.currentTimeMillis()));
+        initLocal();
+        addDefaultImage();
     }
+
+    private void initLocal() {
+        if (inspection != null) {
+            List<AttachMent> attachMents = inspection.getPATROL_NOTE();
+            if (attachMents != null && attachMents.size() > 0) {
+                imageAdapter.setList(attachMents);
+            }
+
+            logName.setText(inspection.getPATROL_LOG_NAME());
+            Adnm adnm = new Adnm();
+            adnm.setADCD(inspection.getADCD());
+            adnm.setADNM(inspection.getADNM());
+            tv_address.setTag(adnm);
+            tv_address.setText(inspection.getADNM());
+
+            River r = new River();
+            r.setREACH_CODE(inspection.getREACH_CODE());
+            r.setREACH_NAME(inspection.getREACH_NAME());
+            tvName.setTag(r);
+            tvName.setText(inspection.getREACH_NAME());
+
+            otherPro.setText(inspection.getOTHER_SITUATION());
+            tvSit.setText(inspection.getDISPOSE_SITUATION());
+
+        }
+    }
+
 
     private void initList() {
         for (Plan.OPTIONSBean pob : plan.getOPTIONS()) {
@@ -281,27 +325,79 @@ public class CreateLogActivity extends BaseToolbarActivity implements ImagesAdap
                 IToast.toast("请选择所属区域");
             }
         }
-        SpringViewHandler handler = new SpringViewHandler(this);
-        Task task = new PostCreateLogTask(this);
-        try {
-            handler.request(getParams(), task);
-        } catch (JSONException e) {
-            e.printStackTrace();
+        // 有网络，网络登陆
+        if (App.getInstance().getNetworkMng().isCanConnect()) {
+            SpringViewHandler handler = new SpringViewHandler(this);
+            Task task = new PostCreateLogTask(this);
+            try {
+                handler.request(getParams(), task);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            handler.setListener(new OnPostListenter() {
+                @Override
+                public void OnPostSuccess(Map<String, Object> result) {
+                    IToast.toast("成功");
+                    finish();
+                }
+
+                @Override
+                public void OnPostFail(Map<String, Object> result) {
+                    IToast.toast("提交失败，日志已保存到本地！");
+                    //保存本地
+                    save();
+                }
+            });
+        } else {
+            IToast.toast("无网络，日志已保存到本地！");
+            //保存本地'
+            save();
         }
-        handler.setListener(new OnPostListenter() {
-            @Override
-            public void OnPostSuccess(Map<String, Object> result) {
-                IToast.toast("成功");
-                finish();
-            }
-
-            @Override
-            public void OnPostFail(Map<String, Object> result) {
-//                IToast.toast(R.string.submit_fail);
-            }
-        });
-
     }
+
+    private void save() {
+        LogDao dao = new LogDao(this);
+        Inspection i = createLog();
+        if (inspection == null) {
+            dao.insert(i);
+        } else {
+            dao.update(i);
+        }
+    }
+
+    private Inspection createLog() {
+        River r = (River) tvName.getTag();
+        Adnm a = (Adnm) tv_address.getTag();
+        Inspection inspection = new Inspection();
+        if (logId != 0) {
+            inspection.setLOG_ID(logId);
+        }
+        if (plan != null)
+            inspection.setPlan(plan);
+        inspection.setPATROL_LOG_NAME(logName.getText().toString());
+        if (r != null) {
+            inspection.setREACH_NAME(r.getREACH_NAME());
+            inspection.setREACH_CODE(r.getREACH_CODE());
+        }
+        if (a != null) {
+            inspection.setADNM(a.getADNM());
+            inspection.setADCD(a.getADCD());
+        }
+        if (StringUtils.hasLength(otherPro.getText().toString())) {
+            inspection.setOTHER_SITUATION(otherPro.getText().toString());
+        }
+
+        if (StringUtils.hasLength(tvSit.getText().toString())) {
+            inspection.setDISPOSE_SITUATION(tvSit.getText().toString());
+        }
+        if (StringUtils.hasLength(jsonArray)) {
+            inspection.setJsonArray(jsonArray);
+        }
+        inspection.setPATROL_NOTE(imageAdapter.getImageList());
+        inspection.setDATA_TYPE(ProblemReport.DATA_LOCAL);
+        return inspection;
+    }
+
 
     /**
      * 请求参数
@@ -392,10 +488,29 @@ public class CreateLogActivity extends BaseToolbarActivity implements ImagesAdap
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         AttachMent attachMent = imageAdapter.getItem(i);
         if (attachMent.getID() == 0) {
+//            requestPermmisons(this);
             chooseMedia(imageAdapter.getImageList());
+
         } else {
             ImagePagerActivity.startShowImages(view.getContext(), imageAdapter.getImagePaths(), i);
         }
+    }
+
+    private void requestPermmisons(final Context context) {
+        Acp.getInstance(context).request(new AcpOptions.Builder()
+                        .setPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.RECORD_AUDIO, Manifest.permission.CAMERA)
+                        .build(),
+                new AcpListener() {
+                    @Override
+                    public void onGranted() {
+                        startActivityForResult(new Intent(CreateLogActivity.this, CameraActivity.class), 100);
+                    }
+
+                    @Override
+                    public void onDenied(List<String> permissions) {
+
+                    }
+                });
     }
 
     private void chooseMedia(List<AttachMent> arrayList) {

@@ -65,4 +65,8 @@ dependencies {
     compile 'com.jungly:gridPasswordView:0.3'
     compile 'com.mylhyl:acp:1.1.7'
     implementation files('libs/flame.jar')
+
+    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5.1'
+    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.1'
+    testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.1'
 }

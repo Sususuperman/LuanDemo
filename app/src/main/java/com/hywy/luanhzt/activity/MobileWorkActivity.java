@@ -395,7 +395,7 @@ public class MobileWorkActivity extends BaseActivity implements OnItemClickListe
                 locale.stop();
                 tvTime.stop();
                 if (tvPlan.getTag() != null)
-                    CreateLogActivity.startAction(this, plan, array,0);
+                    CreateLogActivity.startAction(this, plan, array.toString(),0);
                 break;
             case R.id.layout_search://选择巡查计划
                 if (StringUtils.isNotNullList(list)) {

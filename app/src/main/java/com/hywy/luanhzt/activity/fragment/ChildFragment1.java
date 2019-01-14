@@ -52,6 +52,7 @@ import com.hywy.luanhzt.adapter.item.RiverItem;
 import com.hywy.luanhzt.adapter.menu.IndexDataAdapter;
 import com.hywy.luanhzt.app.App;
 import com.hywy.luanhzt.configure.AppConfigure;
+import com.hywy.luanhzt.dao.LogDao;
 import com.hywy.luanhzt.entity.AppMenu;
 import com.hywy.luanhzt.entity.CompanyContact;
 import com.hywy.luanhzt.entity.Inspection;
@@ -267,6 +268,11 @@ public class ChildFragment1 extends BaseFragment implements SwipeRefreshLayout.O
             }
         }
 
+        LogDao dao = new LogDao(getActivity());
+        List<Inspection> inspections = dao.select();
+        if (StringUtils.isNotNullList(inspections) && inspections.size() >= 3) {
+            IToast.toast("未提交的巡查日志过多，请及时处理");
+        }
     }
 
     /**

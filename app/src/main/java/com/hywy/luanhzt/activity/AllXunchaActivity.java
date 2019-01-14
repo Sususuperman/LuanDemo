@@ -2,13 +2,19 @@ package com.hywy.luanhzt.activity;
 
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
 import com.cs.android.task.Task;
 import com.cs.common.base.BaseToolbarActivity;
+import com.cs.common.utils.DialogTools;
 import com.cs.common.view.SwipeRefreshview;
 import com.hywy.luanhzt.R;
 import com.hywy.luanhzt.adapter.item.InspectionItem;
+import com.hywy.luanhzt.adapter.item.ProblemReportItem;
+import com.hywy.luanhzt.dao.LogDao;
+import com.hywy.luanhzt.dao.ProblemDao;
 import com.hywy.luanhzt.entity.Inspection;
+import com.hywy.luanhzt.entity.ProblemReport;
 import com.hywy.luanhzt.task.GetMyXcTask;
 
 import java.util.HashMap;
@@ -20,7 +26,7 @@ import eu.davidea.flexibleadapter.FlexibleAdapter;
 /**
  * @author Superman
  */
-public class AllXunchaActivity extends BaseToolbarActivity implements FlexibleAdapter.OnItemClickListener {
+public class AllXunchaActivity extends BaseToolbarActivity implements FlexibleAdapter.OnItemClickListener, FlexibleAdapter.OnItemLongClickListener {
     @Bind(R.id.recyclerview)
     RecyclerView recyclerview;
     @Bind(R.id.swipeRefresh)
@@ -58,7 +64,27 @@ public class AllXunchaActivity extends BaseToolbarActivity implements FlexibleAd
     public boolean onItemClick(int position) {
         InspectionItem item = (InspectionItem) swipeRefresh.getAdapter().getItem(position);
         Inspection inspection = item.getData();
-        XcDetailsActivity.startAction(this, inspection);
+        if (inspection.getDATA_TYPE().equals(Inspection.DATA_LOCAL)) {
+            CreateLogActivity.startAction(this, inspection.getPlan(), inspection.getJsonArray(), inspection.getLOG_ID(),inspection);
+        } else
+            XcDetailsActivity.startAction(this, inspection);
         return false;
+    }
+
+    @Override
+    public void onItemLongClick(int position) {
+        InspectionItem item = (InspectionItem) swipeRefresh.getAdapter().getItem(position);
+        Inspection inspection = item.getData();
+        if (inspection.getDATA_TYPE().equals(ProblemReport.DATA_LOCAL)) {
+            DialogTools.showConfirmDialog(this, "提示", "确定删除该条数据？", "确定", new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    LogDao dao = new LogDao(AllXunchaActivity.this);
+                    dao.delete(inspection);
+                    swipeRefresh.getAdapter().removeItem(position);
+                }
+            });
+        }
     }
 }

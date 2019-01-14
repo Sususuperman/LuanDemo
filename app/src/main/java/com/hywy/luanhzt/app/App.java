@@ -22,6 +22,8 @@ import com.hywy.luanhzt.entity.Account;
 import com.hywy.luanhzt.entity.AppMenu;
 import com.iflytek.cloud.SpeechConstant;
 import com.iflytek.cloud.SpeechUtility;
+import com.squareup.leakcanary.LeakCanary;
+import com.squareup.leakcanary.RefWatcher;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -63,6 +65,9 @@ public class App extends BaseApp {
     private static final int CACHE_TIME = 60 * 60000;// 缓存失效时间
     private Hashtable<String, Object> memCacheRegion = new Hashtable<String, Object>();
 
+
+    private RefWatcher refWatcher;
+
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
@@ -95,6 +100,18 @@ public class App extends BaseApp {
         // SDK初始化
         VMSNetSDK.init(this);
 
+        if (LeakCanary.isInAnalyzerProcess(this)) {
+            return;
+        }
+        LeakCanary.install(this);
+    }
+
+    /*
+    *使用RefWatcher监控Activity
+     */
+    public static RefWatcher getRefWatcher(Context context) {
+        App app = (App) context.getApplicationContext();
+        return app.refWatcher;
     }
 
     public static App getInstance() {

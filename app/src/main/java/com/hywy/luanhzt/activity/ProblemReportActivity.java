@@ -126,6 +126,7 @@ public class ProblemReportActivity extends BaseToolbarActivity implements Images
         setHomeEnable(true);
         init();
         initData();
+        addDefaultImage();
     }
 
     @Override
@@ -252,12 +253,11 @@ public class ProblemReportActivity extends BaseToolbarActivity implements Images
         mAdapter = new BaseListFlexAdapter(this);
 //        recyclerView.setLayoutManager(new FullyLinearLayoutManager(this));
 //        recyclerView.setAdapter(mAdapter);
-        addDefaultImage();
         spinnerAdapter1 = new SpinnerListAdapter(this);
 //        spinner.setAdapter(spinnerAdapter1);
 
         logId = getIntent().getLongExtra("logId", 0);
-        latitude = getIntent().getStringExtra("latitude");
+        latitude = getIntent().getStringExtra(  "latitude");
         longtitud = getIntent().getStringExtra("longtitude");
         waitDialog = new WaitDialog(this, "定位中...", false, false);
 
